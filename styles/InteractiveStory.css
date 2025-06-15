@@ -1,0 +1,140 @@
+/* 🌐 Reset + base font */
+*, *::before, *::after {
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* 🎨 Fullscreen layout with background */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #333;
+    background-image: url('../images/image.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+/* 🎵 Music button - fixed top-left */
+.music-container {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+}
+
+.music {
+    width: 300px;
+}
+
+/* 📜 Story container and text */
+.container {
+    width: 90%;
+    max-width: 800px;
+    min-width: 300px;
+    max-height: 80vh;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.text {
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* 🎮 Buttons */
+.btn-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+    width: 50%;
+}
+
+.btn {
+    font-size: 1rem;
+    padding: 15px;
+    color: white;
+    background-color: hsl(200, 100%, 50%);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: hsl(200, 100%, 40%);
+    transform: scale(1.05);
+}
+
+/* Làm chỗ đếm câu đúng */
+.score-container {
+    position: fixed;
+    top: 10px;
+    right: 120px; /* để không đè lên music hoặc replay */
+}
+
+#score-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: default;
+    font-weight: bold;
+}
+
+
+/* 📱 Responsive design */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        max-width: 400px;
+        padding: 15px;
+    }
+
+    .text {
+        font-size: 1rem;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+        padding: 12px;
+    }
+
+    .music {
+        width: 150px;
+    }
+}
+
+/* ✨ Fade-in effect */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

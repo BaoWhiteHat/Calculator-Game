@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Lost Artifact</title>
+    <link rel="stylesheet" href="styles/InteractiveStory.css">
+</head>
+<body>
+
+    <div class="music-container">
+    <audio class="music" controls autoplay muted loop>
+        <source src="music/BackgroundAudio.mp3" type="audio/mpeg">
+        <source src="music/BackgroundAudio.wav" type="audio/wav">
+    </audio>
+</div>
+    
+    <div class="container">
+        <div id="text" class="text">Text</div>
+        <div id="option-buttons" class="btn-grid">
+            <button class="btn">Option 1</button>
+            <button class="btn">Option 2</button>
+        </div>
+    </div>
+<!-- 
+    <div class="score-container">
+    <button id="retry-button" style="display: none;">Retry</button>
+    </div> -->
+
+
+    <script src="scripts/InteractiveStory.js"></script>
+</body>
+</html>
