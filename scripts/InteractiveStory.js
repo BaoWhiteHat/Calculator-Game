@@ -44,20 +44,29 @@ const feedbackMessages = {
 };
 
 const textNodes = [
-    // Patch 0
-    { id: 0, text: "Câu hỏi 1", options: [ { text: "Câu trả lời đúng", nextText: 1, correct: true }, { text: "Câu trả lời sai", nextText: 1 } ], background: "../images/PremiseOpenScene.png" },
-    { id: 3, text: "Câu hỏi 4", options: [ { text: "Câu trả lời sai", nextText: 1 }, { text: "Câu trả lời đúng", nextText: 1, correct: true } ], background: "../images/PremiseOpenScene.png" },
-    { id: 4, text: "Câu hỏi 5", options: [ { text: "Câu trả lời đúng", nextText: 1, correct: true }, { text: "Câu trả lời sai", nextText: "ending" } ], background: "../images/PremiseOpenScene.png" },
+    // Premise - Chọn path
+    { id: "premise", text: "Bạn đứng trước ngã ba đường. Chọn con đường bạn muốn đi:", 
+      options: [
+          { text: "Đi qua cầu phía bên trái", nextText: 0, selectPatch: 0 },
+          { text: "Đi qua rừng phía bên phải", nextText: 1, selectPatch: 1 }
+      ], 
+      background: "../images/PremiseOpenScene.png" 
+    },
 
-    // Patch 1
-    { id: 1, text: "Câu hỏi 2", options: [ { text: "Câu trả lời sai", nextText: 2 }, { text: "Câu trả lời đúng", nextText: 2, correct: true } ], background: "../images/Path1.webp" },
-    { id: 5, text: "Câu hỏi 6", options: [ { text: "Câu trả lời đúng", nextText: 2, correct: true }, { text: "Câu trả lời sai", nextText: 2 } ], background: "../images/Path1.webp" },
-    { id: 6, text: "Câu hỏi 7", options: [ { text: "Câu trả lời sai", nextText: "ending" }, { text: "Câu trả lời đúng", nextText: 2, correct: true } ], background: "../images/Path1.webp" },
+    // Patch 0 - Path trái
+    { id: 0, text: "Câu hỏi 1 - Path trái", options: [ { text: "Câu trả lời đúng", nextText: 2, correct: true }, { text: "Câu trả lời sai", nextText: 2 } ], background: "../images/Path0.webp" },
+    { id: 3, text: "Câu hỏi 4 - Path trái (Retry 1)", options: [ { text: "Câu trả lời sai", nextText: 2 }, { text: "Câu trả lời đúng", nextText: 2, correct: true } ], background: "../images/Path0.webp" },
+    { id: 4, text: "Câu hỏi 5 - Path trái (Retry 2)", options: [ { text: "Câu trả lời đúng", nextText: 2, correct: true }, { text: "Câu trả lời sai", nextText: "ending" } ], background: "../images/Path0.webp" },
 
-    // Patch 2
-    { id: 2, text: "Câu hỏi 3", options: [ { text: "Câu trả lời đúng", nextText: "ending", correct: true }, { text: "Câu trả lời sai", nextText: "ending" } ], background: "../images/Path2.webp" },
-    { id: 7, text: "Câu hỏi 8", options: [ { text: "Câu trả lời sai", nextText: "ending" }, { text: "Câu trả lời đúng", nextText: "ending", correct: true } ], background: "../images/Path2.webp" },
-    { id: 8, text: "Câu hỏi 9", options: [ { text: "Câu trả lời đúng", nextText: "ending", correct: true }, { text: "Câu trả lời sai", nextText: "ending" } ], background: "../images/Path2.webp" },
+    // Patch 1 - Path phải
+    { id: 1, text: "Câu hỏi 2 - Path phải", options: [ { text: "Câu trả lời sai", nextText: 2 }, { text: "Câu trả lời đúng", nextText: 2, correct: true } ], background: "../images/Path1.webp" },
+    { id: 5, text: "Câu hỏi 6 - Path phải (Retry 1)", options: [ { text: "Câu trả lời đúng", nextText: 2, correct: true }, { text: "Câu trả lời sai", nextText: 2 } ], background: "../images/Path1.webp" },
+    { id: 6, text: "Câu hỏi 7 - Path phải (Retry 2)", options: [ { text: "Câu trả lời sai", nextText: "ending" }, { text: "Câu trả lời đúng", nextText: 2, correct: true } ], background: "../images/Path1.webp" },
+
+    // Patch 2 - Path cuối cùng (chung cho cả hai)
+    { id: 2, text: "Câu hỏi 3 - Path cuối", options: [ { text: "Câu trả lời đúng", nextText: "ending", correct: true }, { text: "Câu trả lời sai", nextText: "ending" } ], background: "../images/Path2.webp" },
+    { id: 7, text: "Câu hỏi 8 - Path cuối (Retry 1)", options: [ { text: "Câu trả lời sai", nextText: "ending" }, { text: "Câu trả lời đúng", nextText: "ending", correct: true } ], background: "../images/Path2.webp" },
+    { id: 8, text: "Câu hỏi 9 - Path cuối (Retry 2)", options: [ { text: "Câu trả lời đúng", nextText: "ending", correct: true }, { text: "Câu trả lời sai", nextText: "ending" } ], background: "../images/Path2.webp" },
 
     { id: "ending", text: "", options: [ { text: "Restart", nextText: -1 } ], background: "./images/Endings.webp" }
 ];
@@ -96,6 +105,13 @@ function selectOption(option) {
     // Xử lý nút Restart trước
     if (nextId < 0) {
         resetGame();
+        return;
+    }
+    
+    // Xử lý chọn patch từ premise
+    if (option.selectPatch !== undefined) {
+        currentPatch = option.selectPatch;
+        showTextNode(nextId);
         return;
     }
     
@@ -140,8 +156,11 @@ function proceedAfterFeedback(option) {
         correctAnswers++;
         if (nextId === "ending") {
             showEnding();
+        } else if (nextId === 2) {
+            // Chuyển sang patch 2 (patch cuối)
+            currentPatch = 2;
+            showTextNode(nextId);
         } else {
-            currentPatch++;
             showTextNode(nextId);
         }
     } else {
@@ -190,7 +209,7 @@ function resetGame() {
     correctAnswers = 0;
     retryState = { 0: 0, 1: 0, 2: 0 };
     currentPatch = 0;
-    showTextNode(0);
+    showTextNode("premise");
 }
 
 function startGame() {
