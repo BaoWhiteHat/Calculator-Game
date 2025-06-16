@@ -9,6 +9,40 @@ let retryState = {
     2: 0
 };
 
+// Feedback messages và backgrounds cho từng patch
+const feedbackMessages = {
+    0: {
+        correct: {
+            text: "The crocodile retreats, and you cross safely",
+            background: "../images/CorrectFeedback0.png"
+        },
+        wrong: {
+            text: "You must backtrack and lose time",
+            background: "../images/WrongFeedback0.png"
+        }
+    },
+    1: {
+        correct: {
+            text: "You find a trail and head toward safely",
+            background: "../images/CorrectFeedback1.png"
+        },
+        wrong: {
+            text: "You fall and land in a muddy pit",
+            background: "../images/WrongFeedback1.png"
+        }
+    },
+    2: {
+        correct: {
+            text: "You cross the bridge safely",
+            background: "../images/CorrectFeedback2.png"
+        },
+        wrong: {
+            text: "The bridge snaps, and you fall into the river",
+            background: "../images/WrongFeedback2.png"
+        }
+    }
+};
+
 const textNodes = [
     // Patch 0
     { id: 0, text: "Câu hỏi 1", options: [ { text: "Câu trả lời đúng", nextText: 1, correct: true }, { text: "Câu trả lời sai", nextText: 1 } ], background: "../images/PremiseOpenScene.png" },
@@ -73,15 +107,22 @@ function showFeedback(option) {
     resetUI();
     
     let feedbackText = "";
+    let feedbackBackground = "";
     let isCorrect = option.correct;
     
+    // Lấy feedback message và background dựa trên patch hiện tại
+    const patchFeedback = feedbackMessages[currentPatch];
+    
     if (isCorrect) {
-        feedbackText = "✅ Bạn đã trả lời đúng!";
+        feedbackText = patchFeedback.correct.text;
+        feedbackBackground = patchFeedback.correct.background;
     } else {
-        feedbackText = "❌ Bạn đã trả lời sai!";
+        feedbackText = patchFeedback.wrong.text;
+        feedbackBackground = patchFeedback.wrong.background;
     }
     
     textElement.innerHTML = feedbackText;
+    changeBackground(feedbackBackground);
     
     // Tạo nút "Tiếp tục"
     const continueButton = document.createElement("button");
@@ -108,8 +149,6 @@ function proceedAfterFeedback(option) {
         handleWrongAnswer();
     }
 }
-
-
 
 function handleWrongAnswer() {
     // Không hiển thị alert nữa vì đã có feedback
