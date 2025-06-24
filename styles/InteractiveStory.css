@@ -6,7 +6,7 @@
     padding: 0;
 }
 
-/* 🎨 Fullscreen layout with background */
+/* 🎨 Fullscreen layout with fitted background */
 body {
     display: flex;
     justify-content: center;
@@ -14,10 +14,11 @@ body {
     flex-direction: column;
     height: 100vh;
     background-color: #333;
-    background-image: url('../images/image.png');
+    background: "../images/PremiseOpenScene.png";
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: cover; /* This will scale the image proportionally to cover the full background */
     background-position: center;
+    background-attachment: fixed;
 }
 
 /* 🎵 Music button - fixed top-left */
@@ -25,7 +26,6 @@ body {
     position: fixed;
     top: 10px;
     left: 10px;
-    z-index: 1000;
 }
 
 .music {
@@ -85,25 +85,6 @@ body {
     background-color: hsl(200, 100%, 40%);
     transform: scale(1.05);
 }
-
-/* Làm chỗ đếm câu đúng */
-.score-container {
-    position: fixed;
-    top: 10px;
-    right: 120px; /* để không đè lên music hoặc replay */
-}
-
-#score-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 16px;
-    font-size: 1rem;
-    border-radius: 8px;
-    cursor: default;
-    font-weight: bold;
-}
-
 
 /* 📱 Responsive design */
 @media (max-width: 768px) {
